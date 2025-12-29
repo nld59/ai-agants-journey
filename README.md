@@ -40,6 +40,11 @@ In such cases, the LLM could generate responses that violate safety policies or 
 - Safe JSON parsing
 - Handling unreliable model responses
 
+## Week 1 Day 5
+- Added retry strategy for classification
+- Added fallback when model output is invalid
+- System stays stable under API/format failures
+
 ## Week 1 Summary
 - System-level prompt design
 - Classification and moderation pipelines
