@@ -34,3 +34,8 @@ In such cases, the LLM could generate responses that violate safety policies or 
 - First Python LLM integration
 - Input moderation before processing
 - System-level classification with strict JSON output
+
+## Week 1 Day 4
+- Validating LLM outputs
+- Safe JSON parsing
+- Handling unreliable model responses

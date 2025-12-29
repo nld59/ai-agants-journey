@@ -1,6 +1,7 @@
 # week1/classify_and_moderate.py
 
 import os
+import json
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -45,12 +46,22 @@ def classify_input(text: str) -> dict:
 
     return response.choices[0].message.content
 
+def safe_parse_json(text: str) -> dict | None:
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return None
+
 if __name__ == "__main__":
     user_input = "My payment was declined and I was charged twice."
 
     if not moderate_input(user_input):
         print("Input rejected by moderation.")
     else:
-        classification = classify_input(user_input)
-        print("Classification result:")
-        print(classification)
+        raw_output = classify_input(user_input)
+        parsed = safe_parse_json(raw_output)
+
+        if parsed is None:
+            print("Invalid JSON from model:", raw_output)
+        else:
+            print("Parsed classification:", parsed)
