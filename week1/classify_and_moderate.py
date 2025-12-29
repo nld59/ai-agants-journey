@@ -52,16 +52,24 @@ def safe_parse_json(text: str) -> dict | None:
     except json.JSONDecodeError:
         return None
 
+def classify_with_retry(text: str, retries: int = 2) -> dict | None:
+    for attempt in range(retries):
+        raw = classify_input(text)
+        parsed = safe_parse_json(raw)
+        if parsed is not None:
+            return parsed
+    return None
+
 if __name__ == "__main__":
     user_input = "My payment was declined and I was charged twice."
 
     if not moderate_input(user_input):
         print("Input rejected by moderation.")
     else:
-        raw_output = classify_input(user_input)
-        parsed = safe_parse_json(raw_output)
+        parsed = classify_with_retry(user_input, retries=2)
 
         if parsed is None:
-            print("Invalid JSON from model:", raw_output)
+            fallback = {"category": "general_question", "confidence": 0.0, "fallback": True}
+            print("Fallback classification:", fallback)
         else:
-            print("Parsed classification:", parsed)
+            print("Final classification:", parsed)

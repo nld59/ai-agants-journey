@@ -39,3 +39,9 @@ In such cases, the LLM could generate responses that violate safety policies or 
 - Validating LLM outputs
 - Safe JSON parsing
 - Handling unreliable model responses
+
+## Week 1 Summary
+- System-level prompt design
+- Classification and moderation pipelines
+- LLM output validation
+- Retry and fallback strategies for reliability
